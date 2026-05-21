@@ -15,7 +15,7 @@ export default function ProductsPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard key={product.id} product={product} onClick={() => setLightboxIndex(allImages.indexOf(product.image))} />
         ))}
       </div>
 
@@ -23,35 +23,19 @@ export default function ProductsPage() {
       <p className="text-text-light mb-12">Browse our complete collection</p>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-        {allImages.map((src, i) => {
-          const productIndex = products.findIndex(
-            (p) => p.image === src,
-          );
-          const product = productIndex !== -1 ? products[productIndex] : null;
-
-          return (
-            <div
-              key={i}
-              className="aspect-[3/4] bg-cream overflow-hidden rounded-sm cursor-pointer group relative"
-              onClick={() => setLightboxIndex(i)}
-            >
-              <img
-                src={src}
-                alt={`Gallery ${i + 1}`}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              {product && (
-                <a
-                  href={`/products/${product.id}`}
-                  onClick={(e) => e.stopPropagation()}
-                  className="absolute bottom-2 left-2 bg-white/90 text-primary text-xs px-3 py-1 rounded-sm hover:bg-white transition-colors"
-                >
-                  View Product →
-                </a>
-              )}
-            </div>
-          );
-        })}
+        {allImages.map((src, i) => (
+          <div
+            key={i}
+            className="aspect-[3/4] bg-cream overflow-hidden rounded-sm cursor-pointer group relative"
+            onClick={() => setLightboxIndex(i)}
+          >
+            <img
+              src={src}
+              alt={`Gallery ${i + 1}`}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+          </div>
+        ))}
       </div>
 
       {lightboxIndex !== null && (
